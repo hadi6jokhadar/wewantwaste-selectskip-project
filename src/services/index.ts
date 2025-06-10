@@ -1,0 +1,1 @@
+export { globalService } from "./globalService";

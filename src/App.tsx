@@ -1,25 +1,29 @@
 import React from "react";
-import logo from "./logo.svg";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.scss";
+import WesteType from "./features/waste type/wasteType";
+import SelectSkip from "./features/select skip/selectSkip";
+import PermitCheck from "./features/permit check/permitCheck";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* Default route */}
+        <Route path="/" element={<Navigate to="/weste-type" />} />
+        {/* Step 1 */}
+        <Route path="/weste-type" element={<WesteType />} />
+        {/* Step 2 */}
+        <Route path="/select-skip" element={<SelectSkip />} />
+        {/* Step 3 */}
+        <Route path="/permit-check" element={<PermitCheck />} />
+      </Routes>
+    </Router>
   );
 }
 
