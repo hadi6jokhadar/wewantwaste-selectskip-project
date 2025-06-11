@@ -10,6 +10,13 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInUp 0.5s ease-out;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
 
   &--empty {
     padding: 40px;
@@ -17,7 +24,6 @@
     color: #666;
     font-size: 16px;
   }
-
   &__image-container {
     width: 100%;
     padding: 40px 20px;
@@ -26,10 +32,17 @@
     align-items: center;
     background: $background-color;
     box-sizing: border-box;
+    
     img {
       max-width: 100%;
       height: auto;
       object-fit: contain;
+      transition: transform 0.3s ease;
+      animation: fadeInScale 0.6s ease-out 0.2s both;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
     }
   }
 
@@ -39,12 +52,13 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    min-height: 340px;
-    &__header {
+    min-height: 340px;    &__header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
+      animation: slideInDown 0.5s ease-out 0.1s both;
+      
       &__back-btn,
       &__next-btn {
         width: 40px;
@@ -57,10 +71,39 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: all 0.3s ease;
+        }
 
         &:hover:not(:disabled) {
           background: darken($primary-color, 10%);
+          transform: scale(1.1);
+          
+          &::before {
+            width: 100%;
+            height: 100%;
+          }
+          
+          i {
+            transform: scale(1.1);
+          }
+        }
+
+        &:active:not(:disabled) {
+          transform: scale(0.95);
         }
 
         &:disabled {
@@ -72,14 +115,18 @@
 
         i {
           font-size: 14px;
+          transition: transform 0.2s ease;
+          z-index: 1;
+          position: relative;
         }
-      }
-      &__title {
+      }      &__title {
         font-size: 18px;
         font-weight: 600;
         color: $text-color;
         text-align: center;
         flex: 1;
+        animation: fadeIn 0.6s ease-out 0.3s both;
+        transition: color 0.2s ease;
       }
     }
 
@@ -88,8 +135,16 @@
       align-items: center;
       margin-bottom: 12px;
       font-size: 14px;
+      animation: slideInLeft 0.5s ease-out both;
+      transition: transform 0.2s ease;
 
-      &--hire-period {
+      &:nth-child(2) { animation-delay: 0.2s; }
+      &:nth-child(3) { animation-delay: 0.3s; }
+      &:nth-child(4) { animation-delay: 0.4s; }
+
+      &:hover {
+        transform: translateX(4px);
+      }      &--hire-period {
         .item-card__details__tag__icon {
           width: 30px;
           height: 30px;
@@ -102,6 +157,13 @@
           font-weight: bold;
           font-size: 14px;
           margin-right: 12px;
+          transition: all 0.3s ease;
+          animation: bounceIn 0.6s ease-out 0.4s both;
+        }
+
+        &:hover .item-card__details__tag__icon {
+          transform: scale(1.1) rotate(5deg);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .item-card__details__tag__title {
@@ -115,7 +177,15 @@
           color: #dc3545;
           margin-right: 12px;
           font-size: 16px;
+          transition: all 0.3s ease;
+          animation: pulse 2s infinite;
         }
+        
+        &:hover i {
+          transform: scale(1.2);
+          animation-play-state: paused;
+        }
+        
         .item-card__details__tag__title {
           color: $text-color;
           font-weight: 400;
@@ -129,9 +199,16 @@
       color: $text-color;
       text-align: center;
       margin: auto 0 20px 0;
-    }
-
-    &__footer {
+      animation: fadeInUp 0.6s ease-out 0.5s both;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+        color: $primary-color;
+      }
+    }    &__footer {
+      animation: slideInUp 0.6s ease-out 0.6s both;
+      
       &__button {
         width: 100%;
         padding: 16px;
@@ -140,7 +217,29 @@
         font-size: 16px;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+          );
+          transition: left 0.5s ease;
+        }
+
+        &:hover::before {
+          left: 100%;
+        }
 
         &--select {
           background: $secondary-color;
@@ -148,18 +247,133 @@
 
           &:hover {
             background: darken($secondary-color, 10%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          }
+
+          &:active {
+            transform: translateY(0);
           }
         }
 
         &--confirm {
           background: $primary-color;
           color: $text-color;
+          animation: confirmPulse 1.5s ease-in-out infinite;
 
           &:hover {
             background: darken($primary-color, 10%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation-play-state: paused;
+          }
+
+          &:active {
+            transform: translateY(0);
           }
         }
       }
     }
+  }
+}
+
+// Keyframes for animations
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes confirmPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
   }
 }
