@@ -3,8 +3,11 @@ import "./selectSkip.scss"; // Import the SCSS file
 import { useNavigate } from "react-router-dom";
 import Stepper from "../../components/stepper/stepper";
 import { useRouteValidator } from "../../utils";
+import { useGetItems } from "../../hooks";
 
 const SelectSkip: React.FC = () => {
+  const { items, loading, error, refetch } = useGetItems("NR32", "Lowestoft");
+
   const navigate = useNavigate();
 
   // Validate route access
