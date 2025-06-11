@@ -1,5 +1,6 @@
 export interface ItemCardProps {
   items: ItemClass[];
+  onConfirm?: () => void;
 }
 
 export interface Item {

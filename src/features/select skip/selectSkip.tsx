@@ -9,8 +9,8 @@ import ItemCard from "../../components/item/itemCard";
 const SelectSkip: React.FC = () => {
   const { items, loading, error, refetch } = useGetItems("NR32", "Lowestoft");
 
-  console.log("Loading:", loading);
-  console.log("Items:", items);
+  // console.log("Loading:", loading);
+  // console.log("Items:", items);
 
   const navigate = useNavigate();
 
@@ -23,12 +23,11 @@ const SelectSkip: React.FC = () => {
   const handleBack = () => {
     navigate("/weste-type");
   };
-
   return (
     <div className="select-skip">
       <Stepper />
       <div className="select-skip__content">
-        <ItemCard items={items} />
+        <ItemCard items={items} onConfirm={handleNext} />
       </div>
     </div>
   );
