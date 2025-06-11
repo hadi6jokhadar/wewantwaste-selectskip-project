@@ -16,11 +16,18 @@ const PermitCheck: React.FC = () => {
 
   return (
     <div className="permit-check">
-      <Stepper />
+      <Stepper />{" "}
       <div className="permit-check__content">
-        <h1>Permit Check</h1>
-        {/* Your form or selection UI */}
-        <button onClick={handleBack}>Back</button>
+        <div className="permit-check__test-info">
+          <h1>Permit Check</h1>
+          <p>
+            This page is just for testing the route validation and the page
+            routing
+          </p>
+          <button onClick={handleBack} className="permit-check__button">
+            Back
+          </button>
+        </div>
       </div>
     </div>
   );

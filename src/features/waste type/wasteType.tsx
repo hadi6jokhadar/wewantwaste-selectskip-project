@@ -16,11 +16,18 @@ const WasteType: React.FC = () => {
 
   return (
     <div className="waste-type">
-      <Stepper />
+      <Stepper />{" "}
       <div className="waste-type__content">
-        <h1>Waste Type</h1>
-        {/* Your form or selection UI */}
-        <button onClick={handleNext}>Next</button>
+        <div className="waste-type__test-info">
+          <h1>Waste Type</h1>
+          <p>
+            This page is just for testing the route validation and the page
+            routing
+          </p>
+          <button onClick={handleNext} className="waste-type__button">
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
