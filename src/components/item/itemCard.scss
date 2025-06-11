@@ -1,0 +1,42 @@
+.item-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 300px;
+  height: 100%;
+
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  &__image-container {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    img {
+    }
+  }
+
+  &__details {
+    &__header {
+      &__back-btn {
+      }
+      &__title {
+      }
+      &__next-btn {
+      }
+    }
+    &__tag {
+      &__icon {
+      }
+      &_title {
+      }
+      i {
+      }
+    }
+    &__price {
+    }
+    &__footer {
+      &__select {
+      }
+    }
+  }
+}

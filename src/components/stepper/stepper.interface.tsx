@@ -1,6 +1,4 @@
-export interface StepperProps {
-  className?: string;
-}
+export interface StepperProps {}
 
 export interface Step {
   id: number;

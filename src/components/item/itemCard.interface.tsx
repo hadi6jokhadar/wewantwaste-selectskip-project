@@ -1,5 +1,5 @@
-export interface ItemProps {
-  className?: string;
+export interface ItemCardProps {
+  items: ItemClass[];
 }
 
 export interface Item {
@@ -55,6 +55,10 @@ export class ItemClass implements Item {
   // Helper method to calculate total price including VAT
   getTotalPrice(): number {
     return this.price_before_vat * (1 + this.vat / 100);
+  }
+
+  getTitle(): string {
+    return this.size + " Yard Skip";
   }
 
   // Helper method to check if item is recently created (within last 30 days)

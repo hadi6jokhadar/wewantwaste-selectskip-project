@@ -4,7 +4,7 @@ import "./stepper.scss";
 import { Step, StepperProps } from "./stepper.interface";
 import { globalService } from "../../services";
 
-const Stepper: React.FC<StepperProps> = ({ className = "" }) => {
+const Stepper: React.FC<StepperProps> = ({}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,7 +37,7 @@ const Stepper: React.FC<StepperProps> = ({ className = "" }) => {
     }
   };
   return (
-    <div className={`stepper ${className}`}>
+    <div className={`stepper`}>
       <div className="stepper__steps">
         {steps.map((step, index) => (
           <React.Fragment key={step.id}>

@@ -4,9 +4,13 @@ import { useNavigate } from "react-router-dom";
 import Stepper from "../../components/stepper/stepper";
 import { useRouteValidator } from "../../utils";
 import { useGetItems } from "../../hooks";
+import ItemCard from "../../components/item/itemCard";
 
 const SelectSkip: React.FC = () => {
   const { items, loading, error, refetch } = useGetItems("NR32", "Lowestoft");
+
+  console.log("Loading:", loading);
+  console.log("Items:", items);
 
   const navigate = useNavigate();
 
@@ -24,10 +28,7 @@ const SelectSkip: React.FC = () => {
     <div className="select-skip">
       <Stepper />
       <div className="select-skip__content">
-        <h1>Select Skip</h1>
-        {/* Your form or selection UI */}
-        <button onClick={handleBack}>Back</button>
-        <button onClick={handleNext}>Next</button>
+        <ItemCard items={items} />
       </div>
     </div>
   );

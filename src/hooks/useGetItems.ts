@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { Item } from "../components/item";
+import { Item, ItemClass } from "../components/item";
 import { getItems } from "../services";
 
 export const useGetItems = (
   postcode: string = "NR32",
   area: string = "Lowestoft"
 ) => {
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<ItemClass[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,7 +45,7 @@ export const useGetItems = (
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data: Item[] = await response.json();
+      const data = await getItems(postcode, area);
       setItems(data);
     } catch (err) {
       setError(
