@@ -1,6 +1,5 @@
 import React from "react";
-import { Item, ItemCardProps, ItemClass } from "./itemCard.interface";
-import "./stepper.scss";
+import { ItemCardProps, ItemClass } from "./itemCard.interface";
 
 const ItemCard: React.FC<ItemCardProps> = ({ items }) => {
   const [item, setItem] = React.useState<ItemClass>(items[0]);
