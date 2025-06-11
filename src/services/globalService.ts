@@ -1,3 +1,4 @@
+import { ItemClass } from "../components/item";
 import { Step } from "../components/stepper/stepper.interface";
 
 class GlobalService {
@@ -7,6 +8,43 @@ class GlobalService {
     { id: 2, title: "Select Skip", path: "/select-skip", clickable: true },
     { id: 3, title: "Permit Check", path: "/permit-check", clickable: false },
   ];
+  // Store selected item with localStorage persistence
+  private selectedItem: ItemClass | null = null;
+  private readonly STORAGE_KEY = "wewantwaste_selected_item";
+
+  constructor() {
+    this.loadSelectedItemFromStorage();
+    // Update step 3 clickability based on stored selection
+    this.updateStepClickable(3, !!this.selectedItem);
+  }
+
+  private loadSelectedItemFromStorage(): void {
+    try {
+      const stored = localStorage.getItem(this.STORAGE_KEY);
+      if (stored) {
+        const itemData = JSON.parse(stored);
+        this.selectedItem = new ItemClass(itemData);
+      }
+    } catch (error) {
+      console.warn("Failed to load selected item from storage:", error);
+      this.selectedItem = null;
+    }
+  }
+
+  private saveSelectedItemToStorage(): void {
+    try {
+      if (this.selectedItem) {
+        localStorage.setItem(
+          this.STORAGE_KEY,
+          JSON.stringify(this.selectedItem)
+        );
+      } else {
+        localStorage.removeItem(this.STORAGE_KEY);
+      }
+    } catch (error) {
+      console.warn("Failed to save selected item to storage:", error);
+    }
+  }
 
   // Get steps
   getSteps(): Step[] {
@@ -79,7 +117,6 @@ class GlobalService {
   getFirstClickableStep(): Step | undefined {
     return this.steps.find((step) => step.clickable);
   }
-
   // Check if a step should be accessible (clickable or lower ID than current)
   isStepAccessible(stepId: number, currentStepId: number): boolean {
     const step = this.getStepById(stepId);
@@ -87,6 +124,50 @@ class GlobalService {
 
     // Step is accessible if it's clickable or if it's a previous step
     return step.clickable || stepId <= currentStepId;
+  } // Selected item management - Single selection only
+  selectItem(item: ItemClass): void {
+    this.selectedItem = item;
+    this.saveSelectedItemToStorage();
+    // Update step clickability based on selection
+    this.updateStepClickable(3, true);
+  }
+
+  deselectItem(): void {
+    this.selectedItem = null;
+    this.saveSelectedItemToStorage();
+    // Update step clickability based on selection
+    this.updateStepClickable(3, false);
+  }
+
+  isItemSelected(itemId: number): boolean {
+    return this.selectedItem?.id === itemId;
+  }
+  getSelectedItem(): ItemClass | null {
+    return this.selectedItem;
+  }
+
+  getSelectedItemId(): number | null {
+    return this.selectedItem?.id || null;
+  }
+
+  // Get selected item title for display purposes
+  getSelectedItemTitle(): string | null {
+    return this.selectedItem?.getTitle() || null;
+  }
+
+  // Get selected item total price
+  getSelectedItemTotalPrice(): number | null {
+    return this.selectedItem?.getTotalPrice() || null;
+  }
+
+  clearSelectedItem(): void {
+    this.selectedItem = null;
+    this.saveSelectedItemToStorage();
+    this.updateStepClickable(3, false);
+  }
+
+  hasSelectedItem(): boolean {
+    return !!this.selectedItem;
   }
 }
 
