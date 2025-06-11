@@ -24,23 +24,34 @@ const ItemCard: React.FC<ItemCardProps> = ({
 
         if (selectedIndex !== -1) {
           setItemIndex(selectedIndex);
+          console.log("ItemCard initialized with items:", items);
+          if (onSelected) {
+            onSelected(true);
+          }
         } else {
           // Selected item not found in current items, clear selection and start at 0
           setItemIndex(0);
           globalService.clearSelectedItem();
+          console.log("ItemCard initialized with items:", items);
+          if (onSelected) {
+            onSelected(false);
+          }
         }
       } else {
         setItemIndex(0);
       }
+
       setIsInitialized(true);
     }
   }, [items, isInitialized]);
+
   // Ensure the permit check step is not clickable initially (only if no items are selected)
   React.useEffect(() => {
     if (!globalService.hasSelectedItem()) {
       globalService.updateStepClickable(3, false);
     }
   }, []); // Force re-render when itemIndex changes to update selection state
+
   React.useEffect(() => {
     // Don't clear selection during initialization
     if (!isInitialized) {
@@ -55,9 +66,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
     if (selectedItem && currentItem && selectedItem.id !== currentItem.id) {
       globalService.clearSelectedItem();
     }
-    if (onSelected) {
-      onSelected(false);
-    }
+
     forceUpdate();
   }, [itemIndex, items, isInitialized]);
 
@@ -69,10 +78,16 @@ const ItemCard: React.FC<ItemCardProps> = ({
 
   const handlePrevious = () => {
     setItemIndex((prev) => (prev > 0 ? prev - 1 : items.length - 1));
+    if (onSelected) {
+      onSelected(false);
+    }
   };
 
   const handleNext = () => {
     setItemIndex((prev) => (prev < items.length - 1 ? prev + 1 : 0));
+    if (onSelected) {
+      onSelected(false);
+    }
   };
   const handleSelect = () => {
     if (!isSelected) {
@@ -98,6 +113,8 @@ const ItemCard: React.FC<ItemCardProps> = ({
     // Force re-render to update UI
     forceUpdate();
     if (onSelected) {
+      console.log("ItemCard deselected");
+
       onSelected(false);
     }
   };
