@@ -6,10 +6,23 @@
   min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
+  position: relative;
   &__content {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
+  }
+  &__note {
+    position: absolute;
+    bottom: 40px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0.8;
+    text-align: center;
   }
 }

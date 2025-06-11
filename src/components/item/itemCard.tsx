@@ -3,7 +3,11 @@ import { ItemCardProps } from "./itemCard.interface";
 import { globalService } from "../../services/globalService";
 import "./itemCard.scss";
 
-const ItemCard: React.FC<ItemCardProps> = ({ items, onConfirm }) => {
+const ItemCard: React.FC<ItemCardProps> = ({
+  items,
+  onSelected,
+  onConfirm,
+}) => {
   const [itemIndex, setItemIndex] = React.useState<number>(0);
   const [isInitialized, setIsInitialized] = React.useState<boolean>(false);
 
@@ -28,7 +32,6 @@ const ItemCard: React.FC<ItemCardProps> = ({ items, onConfirm }) => {
       } else {
         setItemIndex(0);
       }
-
       setIsInitialized(true);
     }
   }, [items, isInitialized]);
@@ -52,6 +55,9 @@ const ItemCard: React.FC<ItemCardProps> = ({ items, onConfirm }) => {
     if (selectedItem && currentItem && selectedItem.id !== currentItem.id) {
       globalService.clearSelectedItem();
     }
+    if (onSelected) {
+      onSelected(false);
+    }
     forceUpdate();
   }, [itemIndex, items, isInitialized]);
 
@@ -72,6 +78,9 @@ const ItemCard: React.FC<ItemCardProps> = ({ items, onConfirm }) => {
     if (!isSelected) {
       // When selecting (first click) - add item to global selection
       globalService.selectItem(item);
+      if (onSelected) {
+        onSelected(true);
+      }
     } else {
       // When confirming (second click) - navigate to next step
       if (onConfirm) {
@@ -88,6 +97,9 @@ const ItemCard: React.FC<ItemCardProps> = ({ items, onConfirm }) => {
     globalService.deselectItem();
     // Force re-render to update UI
     forceUpdate();
+    if (onSelected) {
+      onSelected(false);
+    }
   };
   let imageSrc: string = "/small.png";
   if (item.size < 8) {

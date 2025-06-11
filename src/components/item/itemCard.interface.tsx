@@ -1,6 +1,7 @@
 export interface ItemCardProps {
   items: ItemClass[];
   onConfirm?: () => void;
+  onSelected?: (value: boolean) => void;
 }
 
 export interface Item {
